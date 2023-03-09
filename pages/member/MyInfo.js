@@ -1,5 +1,4 @@
-import React from "react";
-const MyInfo = () => {
+export default function MyInfo() {
     return (
         <main>
             <h2>회원정보</h2>
@@ -24,7 +23,5 @@ const MyInfo = () => {
                 </tbody>
             </table>
         </main>
-    );
+    )
 }
-
-export default MyInfo;

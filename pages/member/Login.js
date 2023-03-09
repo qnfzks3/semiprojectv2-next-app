@@ -1,5 +1,4 @@
-import React from "react";
-const Login = () => {
+export default function Login() {
     return (
         <main>
             <h2>로그인</h2>
@@ -13,7 +12,5 @@ const Login = () => {
                 </div>
             </form>
         </main>
-    );
+    )
 }
-
-export default Login;
