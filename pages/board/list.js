@@ -31,7 +31,7 @@ export default function List({boards}) {
                     <th>조회</th>
                 </tr>
 
-                {board.map(bd => (
+                {boards.map(bd => (
                     <tr key={bd.bno}>
                         <td>{bd.bno}</td>
                         <td>{bd.title}</td>
