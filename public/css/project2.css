@@ -24,6 +24,7 @@ button { padding: 5px 7px }
 
 /* 새글쓰기, 본문보기 */
 .drgup { vertical-align: top }
+#writefrm{width:560px;}
 
 /* 회원정보 */
 .myinfo, .myinfo td { /*border: 1px solid black;*/ }
@@ -62,3 +63,4 @@ input[type="text"] { padding: 5px }
 }
 
 .logo { padding: 50px 110px ; width: 75% }
+
