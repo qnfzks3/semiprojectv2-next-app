@@ -11,6 +11,19 @@ const getStpgns = (cpg, alpg) => {
     return stpgns;
 }
 
+const getPgns = (cpg, alpg) => {
+    let isprev = (cpg - 1 > 0);  // 이전 버튼 표시 여부
+    let isnext = (cpg < alpg);   // 다음 버튼 표시 여부
+    let isprev10 = (cpg - 10 > 0);
+    let isnext10 = (cpg + 10 < alpg);
+    let pgn = {'prev': cpg - 1, 'next': cpg + 1, // 이전 : 현재페이지 - 1, 다음 : 현재페이지 + 1
+        'prev10': cpg - 10, 'next10': cpg + 10,
+        'isprev': isprev, 'isnext': isnext,
+        'isprev10': isprev10, 'isnext10': isnext10};
+
+    return pgn;
+}
+
 export async function getServerSideProps(ctx) {
     let [ cpg, ftype, fkey ] = [ ctx.query.cpg, ctx.query.ftype, ctx.query.fkey ];
 
@@ -26,8 +39,12 @@ export async function getServerSideProps(ctx) {
     // 페이지네이션 처리 1
     let stpgns = getStpgns(cpg, alpg);
 
+    // 페이지네이션 처리 2
+    let pgn = getPgns(cpg, alpg);
+
     // 처리 결과를 boards 객체에 추가
     boards.stpgns = stpgns;
+    boards.pgn = pgn;
 
     return { props : {boards} }
 }
@@ -72,7 +89,11 @@ export default function List( {boards} ) {
             </table>
 
             <ul className="pagenation">
-                <li className="prev">이전</li>
+                {boards.pgn.isprev ?
+                    <li> <a href={`?cpg=${boards.pgn.prev}`}>이전</a> </li> : ''}
+
+                {boards.pgn.isprev10 ?
+                    <li> <a href={`?cpg=${boards.pgn.prev10}`}>이전10</a> </li> : ''}
 
                 {boards.stpgns.map(pgn => (
                     pgn.iscpg ?
@@ -80,7 +101,11 @@ export default function List( {boards} ) {
                         <li key={pgn.num}><a href={`?cpg=${pgn.num}`}>{pgn.num}</a></li>
                 ))}
 
-                <li>다음</li>
+                {boards.pgn.isnext10 ?
+                    <li> <a href={`?cpg=${boards.pgn.next10}`}>다음10</a> </li> : ''}
+
+                {boards.pgn.isnext ?
+                    <li> <a href={`?cpg=${boards.pgn.next}`}>다음</a> </li> : ''}
             </ul>
         </main>
     )
