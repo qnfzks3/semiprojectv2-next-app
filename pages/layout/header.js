@@ -9,7 +9,7 @@ const Header = () => {
             <nav>
                 <ul>
                     <li><Link href="/">Home</Link></li>
-                    <li><Link href="/member/Join">회원가입</Link></li>
+                    <li><a href="/member/Join">회원가입</a></li>
                     <li><Link href="/member/Login">로그인</Link></li>
                     <li><Link href="/board/list">게시판</Link></li>
                     <li><Link href="/member/MyInfo">회원정보</Link></li>

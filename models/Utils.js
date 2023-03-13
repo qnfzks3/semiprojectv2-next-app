@@ -8,4 +8,20 @@ const check_captcha = async (response) => {
     return (await data).success;
 };
 
-module.exports = { check_captcha };
+const handleInput = (setTitle, e) => {
+    return setInput(e.target.value);
+};
+
+const process_submit = async (url,data) => {
+    const cnt = fetch(url, {
+        method: 'POST', mode: 'cors',
+        body: JSON.stringify(data),         //보낼때 body 로 json파일로 보냈기 때문에 받을때도  body로 가져온다.
+        headers: {'Content-Type': 'application/json'}
+    }).then(res => res.json());
+
+    return (await cnt).cnt;
+};
+
+
+
+module.exports = { check_captcha,handleInput,process_submit };

@@ -6,7 +6,7 @@ export default async (req,res)=>{
 
     try {
         //new Board(null,title,userid,null,contents,views).insert()
-        const cnt = Board.newOne(title,userid,contents).insert()
+        const cnt = Board.newOne(title,userid,contents).insert() //newOne 함수는 호출하여 새로운 데이터를 생성 하는 함수, insert 함수는 테이블에 추가하는 함수
             .then(result=>result);
 
 
