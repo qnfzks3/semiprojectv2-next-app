@@ -12,11 +12,10 @@
     <li>구글 recaptcha 인증사이트에 비밀키와 사이트 키들을 질의 문자열로 보내 올바른 키인지 확인하고 결과를 json으로 받아옴</li>
     <li>받아온 json 데이터에서 success 키가 true 인지 확인</li>
 </ul>
-<p></p>
 
 
 <form action="?" method="POST" onsubmit="return check_recaptcha()">
-    <div class="g-recaptcha" data-sitekey=""></div>
+    <div className="g-recaptcha" data-sitekey={}></div>
     <br/>
     <input type="button" value="Submit" onclick="check_recaptcha()">
 </form>
