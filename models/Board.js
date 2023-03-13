@@ -41,8 +41,12 @@ class Board {
         this.views = views;
     }
 
-    static newOne(title,userid,contents){
-       return  new Board(null,title,userid,null,contents,null)
+    static newOne(title, userid, contents) {
+        return new Board(null,title,userid,null,contents,null);
+    }
+
+    static modifyOne(bno, title, contents) {
+        return new Board(bno,title,null,null,contents,null);
     }
 
     async insert() {  // 새글쓰기
@@ -54,7 +58,7 @@ class Board {
             conn = await mariadb.makeConn();  // 연결
             let result = await conn.query(boardsql.insert, params); // 실행
             await conn.commit();  // 확인
-            if (result.affectedRows > 0) insertcnt = result.affectedRows;   //rowsAffected 오라클일때 변경된 상수를 알려주는 함수 마리아일땐affectedRows를 사용
+            if (result.affectedRows > 0) insertcnt = result.affectedRows;
         } catch (e) {
             console.log(e);
         } finally {
@@ -111,6 +115,7 @@ class Board {
         try {
             conn = await mariadb.makeConn();
             result = await conn.query(boardsql.selectOne, params);
+
             await conn.query(boardsql.viewOne, params);
             await conn.commit();
 
@@ -132,7 +137,7 @@ class Board {
             conn = await mariadb.makeConn();
             let result = await conn.query(boardsql.update, params);
             await conn.commit();
-            if (result.rowsAffected > 0) updatecnt = result.rowsAffected;
+            if (result.affectedRows > 0) updatecnt = result.affectedRows;
         } catch (e) {
             console.log(e);
         } finally {
@@ -151,7 +156,7 @@ class Board {
             conn = await mariadb.makeConn();
             let result = await conn.query(boardsql.delete, params);
             await conn.commit();
-            if (result.rowsAffected > 0) deletecnt = result.rowsAffected;
+            if (result.affectedRows > 0) deletecnt = result.affectedRows;
         } catch (e) {
             console.log(e);
         } finally {
