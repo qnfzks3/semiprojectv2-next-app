@@ -1,6 +1,4 @@
-
 import Link from "next/link";
-import MyInfo from "../member/MyInfo";
 
 const Header = () => {
     return (
@@ -9,10 +7,10 @@ const Header = () => {
             <nav>
                 <ul>
                     <li><Link href="/">Home</Link></li>
-                    <li><a href="/member/Join">회원가입</a></li>
-                    <li><Link href="/member/Login">로그인</Link></li>
+                    <li><a href="/member/join">회원가입</a></li>
+                    <li><Link href="/member/login">로그인</Link></li>
                     <li><Link href="/board/list">게시판</Link></li>
-                    <li><Link href="/member/MyInfo">회원정보</Link></li>
+                    <li><Link href="/member/myInfo">회원정보</Link></li>
                 </ul>
                 <hr />
             </nav>

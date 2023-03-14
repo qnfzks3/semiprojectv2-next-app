@@ -1,13 +1,13 @@
-const mariadv = require('../models/MariaDB');
+const mariadb = require('../models/MariaDB');
 
 let membersql = {
-    insertsql : ' insert into member (mno,userid,passwd,name,email) ' +
-        ' values (mno.nextval, :1,:2,:3,:4) ',
+    insertsql : ' insert into member (userid,passwd,name,email) ' +
+        ' values (?,?,?,?) ',
     loginsql : ' select count(userid) cnt from member ' +
-        ' where userid = :1 and passwd = :2 ',
-    selectOne: ' select mno,userid,name,email, ' +
-        ` date_format(regdate, '%Y-%m-%d %H:%i:%s') regdate ` +
-        ' from member where userid = :1 '
+        ' where userid = ? and passwd = ? ',
+    selectOne: ' select mno, userid, name, email, ' +
+        ` date_format(regdate, "%Y-%m-%d %H:%i:%s") regdate ` +
+        ' from member where userid = ? '
 }
 
 class Member {
@@ -23,14 +23,13 @@ class Member {
     async insert() {
         let conn = null;
         let params = [this.userid, this.passwd, this.name, this.email];
-        let result=-1;
-
+        let result = -1;
 
         try {
             conn = await mariadb.makeConn();
-            let result = await conn.query(membersql.insertsql, params);
+            result = await conn.query(membersql.insertsql, params);
             await conn.commit();
-            if (result.rowsAffected > 0) result =result.affectedRows;
+            if (result.affectedRows > 0) result = result.affectedRows;
         } catch (ex) {
             console.log(ex);
         } finally {
@@ -42,12 +41,11 @@ class Member {
     async login(uid, pwd) {  // 로그인 처리
         let conn = null;
         let params = [uid, pwd];
-        let result = 0;
+        let result = -1;
 
         try {
             conn = await mariadb.makeConn();
-            let result = await conn.query(membersql.loginsql, params);
-
+            result = await conn.query(membersql.loginsql, params);
         } catch (e) {
             console.log(e);
         } finally {
@@ -64,8 +62,7 @@ class Member {
 
         try {
             conn = await mariadb.makeConn();
-            let result = await conn.query(membersql.selectOne, params);
-
+            result = await conn.query(membersql.selectOne, params);
         } catch (e) {
             console.log(e);
         } finally {

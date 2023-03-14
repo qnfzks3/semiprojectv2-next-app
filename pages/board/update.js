@@ -1,21 +1,31 @@
 import {useState} from "react";
 import axios from "axios";
-import { check_captcha, handleInput, process_submit } from '../../models/Utils'
+import { check_captcha, process_submit, handleInput } from "../../models/Utils";
 
-export default function Write() {
+export async function getServerSideProps(ctx) {
+    let bno = ctx.query.bno;
 
-    const [title, setTitle] = useState('');
+    const url = `http://localhost:3000/api/board/view?bno=${bno}`;
+    const res = await axios.get(url);
+    const board = await res.data[0];
+
+    return { props: {board} }
+}
+
+export default function Update({board}) {
+
+    const [title, setTitle] = useState(board.title);
     const [userid, setUserid] = useState('zzyzzy');
-    const [contents, setContents] = useState('');
+    const [contents, setContents] = useState(board.contents);
 
-    const handlewrite = async () => {
+    const handleupdate = async () => {
         if (grecaptcha.getResponse()
             && await check_captcha(grecaptcha.getResponse())) {
-            // 글쓰기 작업 진행
-            const data = {title: title, userid: userid, contents: contents};
-            if (await process_submit('/api/board/write', data) > 0) {
-                location.href = '/board/list';
-            }
+            let data = {bno: board.bno, title: title, contents: contents};
+            if ((await process_submit('/api/board/update', data)).cnt > 0)
+                location.href = '/board/view?bno=' + board.bno;
+        } else {
+            alert('!!!');
         }
     };
 
@@ -23,10 +33,11 @@ export default function Write() {
         <main>
             <script src="https://www.google.com/recaptcha/api.js" async defer></script>
             <div id="main">
-                <h2>게시판 새글쓰기</h2>
+                <h2>게시판 수정하기</h2>
                 <form name="write" id="writefrm">
                     <div><label htmlFor="title">제목</label>
                         <input type="text" name="title" id="title"
+                               value={title}
                                onChange={e => handleInput(setTitle, e)} /></div>
 
                     <div><label htmlFor="uid">작성자</label>
@@ -36,14 +47,14 @@ export default function Write() {
                     <div><label htmlFor="contents" className="drgup">본문</label>
                         <textarea name="contents" id="contents"
                                   onChange={e => handleInput(setContents, e)}
-                                  rows="7" cols="55"></textarea></div>
+                                  rows="7" cols="55" value={contents} /></div>
 
                     <div><label></label>
-                        <div className="g-recaptcha cap" data-sitekey="6LdB4OskAAAAAJHQbds3wgd3wxTf0hCWk18sBQ-d"></div>
+                        <div className="g-recaptcha cap" data-sitekey="6LdG4OskAAAAAMgMFOSHk_hTcglHx9m1Z9qBuR6y"></div>
                     </div>
 
                     <div><label></label>
-                        <button type="button" id="writebtn" onClick={handlewrite}>입력완료</button>
+                        <button type="button" id="writebtn" onClick={handleupdate}>수정완료</button>
                         <button type="reset">다시입력</button>
                     </div>
                 </form>
@@ -52,10 +63,3 @@ export default function Write() {
     );
 
 }
-
-
-
-
-
-
-
