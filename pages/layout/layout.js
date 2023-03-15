@@ -3,7 +3,9 @@ import Footer from "./Footer";
 
 // localhost:3000/member/join
 
-const Layout = ({children}) => {
+const Layout = ({children,menu}) => {
+    console.log('layout-',menu);
+
     return (
         <html lang="ko">
         <head>
@@ -15,15 +17,16 @@ const Layout = ({children}) => {
             <script src="https://www.google.com/recaptcha/api.js" async defer></script>
             <title>index</title>
         </head>
+
         <body>
         <div id="wrapper">
-            <Header />
-            {children}
+            <Header menu={menu} />
+                {children}
             <Footer />
         </div>
         </body>
         </html>
     );
 }
-
+/*헤더에 값 보내기  menu={menu}*/
 export default Layout;
