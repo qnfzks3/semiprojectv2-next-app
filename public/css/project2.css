@@ -69,4 +69,9 @@ input[type="text"] { padding: 5px }
 
 .cap2{display: inline-flex; padding: 0; margin: -25px 0 0 -10px; width: 200px}
 
+/*로그아웃 버튼*/
+.logout{
+    position: absolute; top: 50%; left: 40%;
 
+
+}

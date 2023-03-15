@@ -8,9 +8,6 @@ import Member from "../../../models/Member";
 
 export default async (req,res)=>{
 
-
-
-
     const [userid,passwd]=[req.query.userid , req.query.passwd];  // url 주소로 넘겨 받아서 사용한다.
 
     try {
@@ -25,8 +22,6 @@ export default async (req,res)=>{
     }catch (err){
         res.status(500).json(err);
     }
-
-
 }
 
 
