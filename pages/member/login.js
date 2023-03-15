@@ -1,13 +1,13 @@
 import {useState} from "react";
-import axios from "axios";
+
 import {handleInput} from "../../models/Utils";
 import {getSession, signIn, useSession} from "next-auth/client";
-import {getRawProjectId} from "next/dist/telemetry/project-id";
+
 
 export async function getServerSideProps(ctx) {
     //세션 객체 가져오기 - 다른 페이지 이동
     const sess = await getSession(ctx);
-    if (!sess) {
+    if (sess) {
         return { // 회원정보로 이동
             redirect: {permanent: false, destination: `/member/myinfo`},
             props: {}
@@ -17,9 +17,6 @@ export async function getServerSideProps(ctx) {
 }
 
 export default function Login() {
-
-    const [session, loading] = useSession();
-    console.log('myinfo - ', session?.user?.userid);
 
     const [userid, setUserid] = useState('');
     const [passwd, setPasswd] = useState('');
@@ -42,7 +39,7 @@ export default function Login() {
         if(error){
             location.href ='/member/faillogin';
         }else{
-            location.href = '/memeber/myinfo';
+            location.href = '/member/myinfo';
         }
     };
 

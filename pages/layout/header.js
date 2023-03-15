@@ -12,7 +12,7 @@ import {getSession} from "next-auth/client";
 
 }*/
 /*{문자열을 html태그로 출력-dangerouslySetInnerHTML }*/
-const Header = (menu) => {
+const Header = ({menu}) => {
     console.log('header-',menu)
     return (
         <>

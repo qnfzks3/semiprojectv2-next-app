@@ -3,7 +3,7 @@ import Footer from "./Footer";
 
 // localhost:3000/member/join
 
-const Layout = ({children,menu}) => {
+const Layout = ({children, menu}) => {
     console.log('layout-',menu);
 
     return (
