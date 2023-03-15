@@ -1,23 +1,33 @@
 import axios from "axios";
+import {getSession, signOut, useSession} from "next-auth/client";
 
-//member에 myinfo를 접속하면 getServerSideProps로 데이터를 호출하고  - > 내부적으로 api/member/myinfo를 호출하고 -> mariadb(member)를 호출한다.
+export async function getServerSideProps(ctx) {
+    //세션 객체 가져오기 - 다른 페이지 이동
+    const sess =await getSession(ctx);
+    if(!sess){
+        return { // 로그인하지 않는 경우 로그인으로 이동
+            redirect: {permanent: false,destination: `/member/login`},
+            props: {}
+        }
+    }
 
-// 이렇게 호출한 데이터 테이블을 리턴하며 ( 호출한 테이블이름 member) 아래에 매개변수로 보내준다.
+    // let userid = ctx.query.userid;
+    //let userid = 'abc123';
+    
+    let userid = sess.user.userid; // 로그인한 사용자 아이디
+    let url = `http://localhost:3000/api/member/myinfo?userid=${userid}`;
 
-export async function getServerSideProps(ctx){
-    //let {userid} = ctx.query.userid;
-    let userid='abc123';
-    let url = `http://localhost:3000/api/member/myinfo?userid=${userid}`;  //getServerSideProps가 데이터를 가져오는 부분
-
-    const res=await axios.get(url);
+    const res = await axios.get(url);
     const member = await res.data[0];
-    console.log('pg myinfo-',await member)
+    console.log('pg myinfo - ', await member);
 
-    return {props : {member}}
+    return {props : {member:member, session: sess} }
 }
 
+export default function MyInfo({member, session}) {
 
-export default function MyInfo({member}) {
+    console.log('myinfo - ', session?.user?.userid);
+
     return (
         <main>
             <h2>회원정보</h2>
@@ -41,6 +51,10 @@ export default function MyInfo({member}) {
                 </tr>
                 </tbody>
             </table>
+            {
+                session ?
+                    <button onClick={() => signOut()}>로그아웃하기</button> : ''
+            }
         </main>
     )
 }

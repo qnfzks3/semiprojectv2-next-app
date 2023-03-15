@@ -2,11 +2,27 @@ import {check_captcha, handleInput, process_submit} from "../../models/Utils";
 import {useState} from "react";
 
 import {handleInput,check_captcha, hashPassword, process_submit} from "../../models/Utils";
+import {getSession} from "next-auth/client";
+
+
+
+export async function getServerSideProps(ctx) {
+    //세션 객체 가져오기 - 다른 페이지 이동
+    const sess = await getSession(ctx);
+    if (!sess) {
+        return { // 로그인한 경우 회원 정보로 이동
+            redirect: {permanent: false, destination: `/member/myinfo`},
+            props: {}
+        }
+    }
+    return {props:{}}
+}
+
 
 export default function Join() {
 
     const [userid, setUserid] = useState('');
-    const [passwd, setPasswd,] = useState('');
+    const [passwd, setPasswd] = useState('');
     const [repwd, setRepwd] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
