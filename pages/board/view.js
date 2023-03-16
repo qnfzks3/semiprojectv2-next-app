@@ -1,4 +1,6 @@
 import axios from "axios";
+import Layout from "../../components/layout/layout";
+import Login from "../member/login";
 
 export async function getServerSideProps(ctx){
     let bno= ctx.query.bno;
@@ -58,6 +60,12 @@ export default function View({board}){
 
 }
 
+View.getLayout=(page)=>( //페이지 제목 넣기
+    <Layout meta={{title:'본문 보기'}}>
+        {page}
+    </Layout>
+
+)
 
 
 

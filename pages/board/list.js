@@ -2,6 +2,8 @@ import {useState} from "react";
 import fetch from 'isomorphic-unfetch';
 import axios from 'axios';
 import Link from "next/link";
+import Layout from "../../components/layout/layout";
+import Join from "../member/join";
 
 const getStpgns = (cpg, alpg) => {
     let stpgns = [];
@@ -147,3 +149,10 @@ export default function List( {boards} ) {
         </main>
     )
 }
+
+List.getLayout=(page)=>(  //페이지 제목 넣기
+    <Layout meta={{title:'게시판'}}>
+        {page}
+    </Layout>
+
+)

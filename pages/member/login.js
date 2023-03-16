@@ -2,6 +2,8 @@ import {useState} from "react";
 
 import {handleInput} from "../../components/Utils";
 import {getSession, signIn, useSession} from "next-auth/client";
+import Layout from "../../components/layout/layout";
+import Join from "./join";
 
 
 export async function getServerSideProps(ctx) {
@@ -61,3 +63,11 @@ export default function Login() {
         </main>
     )
 }
+
+
+Login.getLayout=(page)=>( //페이지 제목 넣기
+    <Layout meta={{title:'로그인'}}>
+        {page}
+    </Layout>
+
+)

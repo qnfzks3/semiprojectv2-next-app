@@ -9,7 +9,7 @@ export default function Home() {
 }
 
 Home.getLayout=(page)=>(
-    <Layout meta={{title:'index'}}>
+    <Layout meta={{title:'NextJs 프로젝트'}}>
         {page}
     </Layout>
 
