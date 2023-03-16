@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import {handleInput} from "../../models/Utils";
+import {handleInput} from "../../components/Utils";
 import {getSession, signIn, useSession} from "next-auth/client";
 
 
