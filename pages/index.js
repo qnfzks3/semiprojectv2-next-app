@@ -1,3 +1,5 @@
+import Layout from "../components/layout/layout";
+
 export default function Home() {
     return (
         <main>
@@ -6,6 +8,12 @@ export default function Home() {
     )
 }
 
+Home.getLayout=(page)=>(
+    <Layout meta={{title:'index'}}>
+        {page}
+    </Layout>
+
+)
 
 
 
